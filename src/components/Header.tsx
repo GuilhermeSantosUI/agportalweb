@@ -1,6 +1,9 @@
 import logoImg from '@/assets/images/agape-logo.png';
 import { MagnifyingGlassIcon } from '@phosphor-icons/react';
 import React from 'react';
+
+import { NavUser } from '@/pages/components/nav-user';
+import { RequestAccess } from '@/pages/components/request-access';
 import {
   CommandDialog,
   CommandEmpty,
@@ -15,10 +18,8 @@ import { Input } from './ui/input';
 export function Header() {
   const [open, setOpen] = React.useState(false);
 
-  // abre o command e foca o input interno
   React.useEffect(() => {
     if (!open) return;
-    // foca o input do Command (usa atributo data-slot definido no component)
     const el = document.querySelector(
       '[data-slot="command-input"]'
     ) as HTMLInputElement | null;
@@ -27,7 +28,6 @@ export function Header() {
 
   React.useEffect(() => {
     function onKey(e: KeyboardEvent) {
-      // Suporta Ctrl+K e Ctrl+F (também Cmd no macOS)
       const isCmd = e.ctrlKey || e.metaKey;
       if (!isCmd) return;
       const key = e.key.toLowerCase();
@@ -42,12 +42,8 @@ export function Header() {
   }, []);
 
   function handleCommandAction(action: string) {
-    // implemente ações reais aqui (navegação, etc.)
-    // por enquanto apenas fecha e loga
     console.log('Command action:', action);
     setOpen(false);
-    // Exemplo: navegar para outra rota
-    // window.location.href = '/dashboard'
   }
 
   return (
@@ -97,6 +93,18 @@ export function Header() {
             </CommandDialog>
           </div>
         </div>
+        
+        <div className="flex items-center">
+          <RequestAccess />
+        </div>
+
+        <NavUser
+          user={{
+            name: 'User Name',
+            email: 'user@example.com',
+            avatar: '/path/to/avatar.jpg',
+          }}
+        />
       </nav>
     </header>
   );
