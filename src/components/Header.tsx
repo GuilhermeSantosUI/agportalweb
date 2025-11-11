@@ -6,7 +6,7 @@ import { Bell, MagnifyingGlass, Plus } from '@phosphor-icons/react';
 
 export function Header() {
   return (
-    <header className="flex items-center justify-between px-6 py-4 border-b to-transparent backdrop-blur-sm">
+    <header className="flex items-center justify-between px-6 bg-primary py-4 to-transparent backdrop-blur-sm">
       <div className="flex items-center gap-4">
         <img src={logoImg} alt="Ágape Sistemas" className="w-28 rounded-sm" />
 

@@ -1,6 +1,13 @@
 import FavoritesGrid from '@/components/FavoritesGrid';
 import { Header } from '@/components/Header';
-import { Buildings, Car, CurrencyDollar, Robot, Star, User, Users } from '@phosphor-icons/react';
+import {
+  Buildings,
+  Car,
+  CurrencyDollar,
+  Robot,
+  User,
+  Users,
+} from '@phosphor-icons/react';
 
 export function Dashboard() {
   const favorites = [
@@ -49,21 +56,27 @@ export function Dashboard() {
   ];
 
   return (
-    <div className="min-h-screen text-foreground flex flex-col">
+    <div className="min-h-screen text-foreground bg-primary flex flex-col">
       <Header />
 
-      <main className="flex-1 p-6">
+      <main className="flex-1 p-6 bg-white rounded-tr-2xl rounded-tl-2xl">
         <div className="mx-auto w-full">
           <div className="flex items-center justify-between mb-6">
             <div>
               <h1 className="text-2xl font-medium flex items-center gap-2">
                 Portal Ágape Sistemas
               </h1>
-              <p className="text-sm text-muted-foreground mt-1">Seus sistemas favoritos e ferramentas</p>
+              <p className="text-sm text-muted-foreground mt-1">
+                Seus sistemas favoritos e ferramentas
+              </p>
             </div>
             <div className="flex items-center gap-2">
-              <button className="inline-flex items-center gap-2 border rounded-md px-3 py-1 text-sm bg-white">Visualização em Grid</button>
-              <button className="inline-flex items-center gap-2 border rounded-md px-3 py-1 text-sm bg-white">Visualização em Lista</button>
+              <button className="inline-flex items-center gap-2 border rounded-md px-3 py-1 text-sm bg-white">
+                Visualização em Grid
+              </button>
+              <button className="inline-flex items-center gap-2 border rounded-md px-3 py-1 text-sm bg-white">
+                Visualização em Lista
+              </button>
             </div>
           </div>
 
@@ -72,7 +85,9 @@ export function Dashboard() {
               <h2 className="text-lg font-semibold flex items-center gap-2">
                 Sistemas Favoritos
               </h2>
-              <span className="text-sm text-muted-foreground">{favorites.length} sistemas</span>
+              <span className="text-sm text-muted-foreground">
+                {favorites.length} sistemas
+              </span>
             </div>
 
             <FavoritesGrid favorites={favorites} />
@@ -82,4 +97,3 @@ export function Dashboard() {
     </div>
   );
 }
-
