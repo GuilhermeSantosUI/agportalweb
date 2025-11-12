@@ -36,7 +36,6 @@ export function ReregisterForm({ onClose }: { onClose?: () => void }) {
     return () => {
       if (photo) URL.revokeObjectURL(photo.url);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function handleClose() {

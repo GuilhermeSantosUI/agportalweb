@@ -87,7 +87,7 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: #0D295D;
+  --primary: #0d295d;
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
@@ -179,4 +179,82 @@
 }
 .animate-slidein700 {
   animation: slidein 1s ease 700ms forwards;
+}
+
+/* Greeting pill (avatar header) */
+.greeting-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.125rem 0.5rem;
+  border-radius: 9999px;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+  user-select: none;
+}
+
+.greeting-pill:hover {
+  transform: translateY(-3px);
+}
+
+.greeting-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+
+.greeting-text {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: inherit;
+  display: none; /* esconder em telas muito pequenas */
+}
+
+@media (min-width: 640px) {
+  .greeting-text {
+    display: inline-block;
+  }
+}
+
+/* Animations */
+@keyframes float-y {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slow-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.greeting-pill .greeting-icon {
+  animation: float-y 3.6s ease-in-out infinite;
+}
+
+.greeting-pill.day .greeting-icon svg {
+  filter: drop-shadow(0 1px 6px rgba(255, 180, 60, 0.12));
+}
+
+.greeting-pill.night .greeting-icon svg {
+  filter: drop-shadow(0 2px 8px rgba(96, 165, 250, 0.08));
+}
+
+.greeting-pill.day .greeting-icon.animate-rotate {
+  animation: slow-rotate 8s linear infinite, float-y 3.6s ease-in-out infinite;
+}
+
+/* small touch: slightly scale on active */
+.greeting-pill:active {
+  transform: translateY(-1px) scale(0.995);
 }

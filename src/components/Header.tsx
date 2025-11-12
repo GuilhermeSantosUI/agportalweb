@@ -25,6 +25,8 @@ import {
   BellIcon,
   ClipboardIcon,
   FileTextIcon,
+  MoonIcon,
+  SunIcon,
   UsersIcon,
 } from '@phosphor-icons/react';
 import { Kbd } from './ui/kbd';
@@ -90,6 +92,7 @@ export function Header() {
     <header className="flex items-center justify-between px-6 bg-primary py-4 to-transparent backdrop-blur-sm">
       <div className="flex items-center gap-4">
         <img src={logoImg} alt="Ágape Sistemas" className="w-32 rounded-sm" />
+        <GreetingPill />
       </div>
 
       <div className="flex items-center gap-3">
@@ -194,5 +197,55 @@ export function Header() {
         />
       </div>
     </header>
+  );
+}
+
+function GreetingPill() {
+  function getTimeState() {
+    const hour = new Date().getHours();
+    if (hour >= 5 && hour < 12) {
+      return {
+        greeting: 'Bom dia',
+        Icon: SunIcon,
+        colorClass: 'text-amber-400',
+        variant: 'day',
+      };
+    }
+    if (hour >= 12 && hour < 18) {
+      return {
+        greeting: 'Boa tarde',
+        Icon: SunIcon,
+        colorClass: 'text-orange-400',
+        variant: 'day',
+      };
+    }
+    return {
+      greeting: 'Boa noite',
+      Icon: MoonIcon,
+      colorClass: 'text-sky-400',
+      variant: 'night',
+    };
+  }
+
+  const [timeState, setTimeState] = React.useState(() => getTimeState());
+
+  React.useEffect(() => {
+    const id = setInterval(() => setTimeState(getTimeState()), 60 * 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const Icon = timeState.Icon as React.ComponentType<any>;
+
+  return (
+    <div
+      className={`greeting-pill ${timeState.variant}`}
+      title={`${timeState.greeting}`}
+    >
+      <span className={`greeting-icon ${timeState.colorClass}`}>
+        <Icon className="h-4 w-4" weight="duotone" />
+      </span>
+      <span className="text-white">{timeState.greeting}</span>
+    </div>
   );
 }

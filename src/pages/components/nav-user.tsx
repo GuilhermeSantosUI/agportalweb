@@ -4,6 +4,7 @@ import { Database, Key, LogOut } from 'lucide-react';
 import * as React from 'react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../../components/ui/button';
 import {
   Dialog,
@@ -40,15 +41,18 @@ export function NavUser({
   const [openChangeUserPwd, setOpenChangeUserPwd] = React.useState(false);
   const [openChangeDbPwd, setOpenChangeDbPwd] = React.useState(false);
   const [openLogoutDialog, setOpenLogoutDialog] = React.useState(false);
+  const router = useNavigate();
 
   return (
     <>
       <DropdownMenu>
         <DropdownMenuTrigger>
-          <Avatar className="h-8 w-8 rounded-sm bg-white">
-            <AvatarImage src={user.avatar} alt={user.name} />
-            <AvatarFallback className="rounded-lg">CN</AvatarFallback>
-          </Avatar>
+          <div className="flex items-center gap-2">
+            <Avatar className="h-8 w-8 rounded-sm bg-white">
+              <AvatarImage src={user.avatar} alt={user.name} />
+              <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+            </Avatar>
+          </div>
         </DropdownMenuTrigger>
 
         <DropdownMenuContent
@@ -69,7 +73,9 @@ export function NavUser({
               </div>
             </div>
           </DropdownMenuLabel>
+
           <DropdownMenuSeparator />
+
           <DropdownMenuGroup>
             <DropdownMenuItem onClick={() => setOpenRecadastro(true)}>
               <Database />
@@ -84,7 +90,9 @@ export function NavUser({
               Mudar senha (Banco)
             </DropdownMenuItem>
           </DropdownMenuGroup>
+
           <DropdownMenuSeparator />
+
           <DropdownMenuItem onClick={() => setOpenLogoutDialog(true)}>
             <LogOut />
             Log out
@@ -117,11 +125,7 @@ export function NavUser({
                 if (onLogout) {
                   onLogout();
                 } else {
-                  // placeholder: implementar logout real aqui
-                  // por enquanto só logamos no console
-                  // quem usa o componente pode passar `onLogout`
-                  // para executar a ação real
-                  // Ex.: redirecionar para /logout ou chamar API
+                  router('/');
                   console.log('logout');
                 }
               }}
@@ -133,6 +137,7 @@ export function NavUser({
       </Dialog>
 
       <Reregister open={openRecadastro} onOpenChange={setOpenRecadastro} />
+
       <ChangePassword
         openChangeUserPwd={openChangeUserPwd}
         setOpenChangeUserPwd={setOpenChangeUserPwd}

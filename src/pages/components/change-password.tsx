@@ -1,13 +1,12 @@
 import { Button } from '../../components/ui/button';
-import { Input } from '../../components/ui/input';
 import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-} from '../../components/ui/sheet';
+  Field,
+  FieldContent,
+  FieldGroup,
+  FieldLabel,
+} from '../../components/ui/field';
+import { Input } from '../../components/ui/input';
+import { Sheet, SheetContent, SheetHeader } from '../../components/ui/sheet';
 
 export type ChangePasswordProps = {
   openChangeUserPwd: boolean;
@@ -32,10 +31,12 @@ export function ChangePassword({
         >
           <div className="w-full">
             <SheetHeader className="mb-4 gap-0">
-              <SheetTitle>Mudar senha (Banco)</SheetTitle>
-              <SheetDescription>
+              <h3 className="text-xl font-semibold text-slate-700">
+                Mudar senha (Banco)
+              </h3>
+              <p className="text-sm text-muted-foreground">
                 Alterar a senha do usuário de banco de dados.
-              </SheetDescription>
+              </p>
             </SheetHeader>
 
             <form
@@ -46,22 +47,31 @@ export function ChangePassword({
                 setOpenChangeDbPwd(false);
               }}
             >
-              <div className="grid gap-2 py-4 px-0">
-                <label className="text-sm">Usuário do banco</label>
-                <Input placeholder="Usuário do banco" />
-                <label className="text-sm">Nova senha do banco</label>
-                <Input type="password" placeholder="Nova senha" />
-              </div>
+              <FieldGroup>
+                <Field>
+                  <FieldLabel>Usuário do banco</FieldLabel>
+                  <FieldContent>
+                    <Input placeholder="Usuário do banco" />
+                  </FieldContent>
+                </Field>
 
-              <SheetFooter className="flex items-center justify-end gap-4">
-                <Button
-                  variant="outline"
-                  onClick={() => setOpenChangeDbPwd(false)}
-                >
-                  Cancelar
-                </Button>
-                <Button type="submit">Salvar</Button>
-              </SheetFooter>
+                <Field>
+                  <FieldLabel>Nova senha do banco</FieldLabel>
+                  <FieldContent>
+                    <Input type="password" placeholder="Nova senha" />
+                  </FieldContent>
+                </Field>
+
+                <div className="flex items-center justify-end gap-4">
+                  <Button
+                    variant="outline"
+                    onClick={() => setOpenChangeDbPwd(false)}
+                  >
+                    Cancelar
+                  </Button>
+                  <Button type="submit">Salvar</Button>
+                </div>
+              </FieldGroup>
             </form>
           </div>
         </SheetContent>
@@ -75,10 +85,12 @@ export function ChangePassword({
         >
           <div className="w-full">
             <SheetHeader className="mb-4 gap-0">
-              <SheetTitle>Mudar senha (Usuário)</SheetTitle>
-              <SheetDescription>
+              <h3 className="text-xl font-semibold text-slate-700">
+                Mudar senha (Usuário)
+              </h3>
+              <p className="text-sm text-muted-foreground">
                 Alterar a senha de acesso do usuário.
-              </SheetDescription>
+              </p>
             </SheetHeader>
 
             <form
@@ -89,24 +101,41 @@ export function ChangePassword({
                 setOpenChangeUserPwd(false);
               }}
             >
-              <div className="grid gap-2 py-4 px-0">
-                <label className="text-sm">Senha atual</label>
-                <Input type="password" placeholder="Senha atual" />
-                <label className="text-sm">Nova senha</label>
-                <Input type="password" placeholder="Nova senha" />
-                <label className="text-sm">Confirmar nova senha</label>
-                <Input type="password" placeholder="Confirme a nova senha" />
-              </div>
+              <FieldGroup>
+                <Field>
+                  <FieldLabel>Senha atual</FieldLabel>
+                  <FieldContent>
+                    <Input type="password" placeholder="Senha atual" />
+                  </FieldContent>
+                </Field>
 
-              <SheetFooter className="flex items-center justify-end gap-4">
-                <Button
-                  variant="outline"
-                  onClick={() => setOpenChangeUserPwd(false)}
-                >
-                  Cancelar
-                </Button>
-                <Button type="submit">Salvar</Button>
-              </SheetFooter>
+                <Field>
+                  <FieldLabel>Nova senha</FieldLabel>
+                  <FieldContent>
+                    <Input type="password" placeholder="Nova senha" />
+                  </FieldContent>
+                </Field>
+
+                <Field>
+                  <FieldLabel>Confirmar nova senha</FieldLabel>
+                  <FieldContent>
+                    <Input
+                      type="password"
+                      placeholder="Confirme a nova senha"
+                    />
+                  </FieldContent>
+                </Field>
+
+                <div className="flex items-center justify-end gap-4">
+                  <Button
+                    variant="outline"
+                    onClick={() => setOpenChangeUserPwd(false)}
+                  >
+                    Cancelar
+                  </Button>
+                  <Button type="submit">Salvar</Button>
+                </div>
+              </FieldGroup>
             </form>
           </div>
         </SheetContent>
