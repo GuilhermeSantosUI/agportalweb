@@ -58,7 +58,12 @@ export function RequestAccess() {
 
   return (
     <>
-      <Button variant="outline" className='text-black' size="sm" onClick={() => setSheetOpen(true)}>
+      <Button
+        variant="outline"
+        className="text-black"
+        size="sm"
+        onClick={() => setSheetOpen(true)}
+      >
         Solicitar acesso
       </Button>
 
