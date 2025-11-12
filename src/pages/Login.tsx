@@ -1,5 +1,9 @@
 import logoImg from '@/assets/images/agape-logo-amarela.png';
-import { CertificateDonePanel, CertificateProcessingPanel, CertificateSelectionPanel } from '@/components/certificate-panel';
+import {
+  CertificateDonePanel,
+  CertificateProcessingPanel,
+  CertificateSelectionPanel,
+} from '@/components/certificate-panel';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
@@ -156,9 +160,12 @@ export function Login() {
   }
 
   return (
-    <div className="h-screen bg-white px-6">
+    <div className="h-screen bg-white p-6">
       <div className="w-full h-full flex gap-8 items-center">
-        <div className="hidden md:block w-[60%] h-full"></div>
+        <img 
+          src="https://ui.shadcn.com/placeholder.svg" 
+          className="hidden md:flex w-[60%] object-cover items-center justify-center h-full rounded-xl"
+        />
 
         <div className="flex w-full md:w-[40%] h-full flex-col items-stretch justify-center px-2 md:px-8">
           <div className="mb-6 flex items-center justify-between">
