@@ -37,6 +37,25 @@ export function RequestAccess() {
   ];
   const maxFileSize = 500 * 1024; // 500kb
 
+  // Abrir o sheet quando receber um evento global 'open-request-access'.
+  React.useEffect(() => {
+    function onOpenRequest(e: Event) {
+      const detail = (e as CustomEvent)?.detail ?? {};
+      if (detail.what) setWhat(detail.what as string);
+      setSheetOpen(true);
+    }
+
+    window.addEventListener(
+      'open-request-access',
+      onOpenRequest as EventListener
+    );
+    return () =>
+      window.removeEventListener(
+        'open-request-access',
+        onOpenRequest as EventListener
+      );
+  }, []);
+
   return (
     <>
       <Button variant="outline" size="sm" onClick={() => setSheetOpen(true)}>

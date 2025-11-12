@@ -1,7 +1,6 @@
 import { hasAccess } from '@/app/utils/access';
 import useFavorites from '@/app/utils/useFavorites';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { RequestAccess } from '@/pages/components/request-access';
 import { Star } from '@phosphor-icons/react';
 import React from 'react';
 
@@ -16,7 +15,14 @@ type Props = {
   lastAccess?: string;
 };
 
-export function FavoriteCard({ id, title, subtitle, Icon, status, lastAccess, }: Props) {
+export function FavoriteCard({
+  id,
+  title,
+  subtitle,
+  Icon,
+  status,
+  lastAccess,
+}: Props) {
   const computedId = id ?? title.replace(/\s+/g, '-').toLowerCase();
   const { isFavorite, toggle } = useFavorites();
   const fav = isFavorite(computedId);
@@ -24,7 +30,9 @@ export function FavoriteCard({ id, title, subtitle, Icon, status, lastAccess, }:
 
   return (
     <Card
-      className={`group transition-all gap-0 duration-300 ${access ? 'cursor-pointer' : 'opacity-80'} border border-primary/20 relative`}
+      className={`group transition-all gap-0 duration-300 ${
+        access ? 'cursor-pointer' : 'opacity-80'
+      } border border-primary/20 relative`}
       onClick={() => access && console.log('Abrir', title)}
       role="button"
       aria-label={`Abrir ${title}`}
@@ -77,15 +85,20 @@ export function FavoriteCard({ id, title, subtitle, Icon, status, lastAccess, }:
       </CardContent>
 
       {!access && (
-        <div className="absolute inset-0 bg-black/40 flex items-center justify-center rounded">
-          <div className="text-center">
-            <div className="mb-3 text-white font-semibold">Acesso restrito</div>
-            <div className="flex items-center justify-center gap-2">
-              {/* RequestAccess traz o próprio botão e sheet */}
-              <RequestAccess />
-            </div>
-          </div>
-        </div>
+        // apenas blur; clique abrirá o formulário de solicitação via evento global
+        <div
+          className="absolute inset-0 opacity-0.5 rounded-lg"
+          role="button"
+          aria-label={`Solicitar acesso a ${title}`}
+          onClick={(e) => {
+            e.stopPropagation();
+            window.dispatchEvent(
+              new CustomEvent('open-request-access', {
+                detail: { what: title, id: computedId },
+              })
+            );
+          }}
+        />
       )}
     </Card>
   );

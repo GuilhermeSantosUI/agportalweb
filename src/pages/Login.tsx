@@ -1,9 +1,5 @@
 import logoImg from '@/assets/images/agape-logo-amarela.png';
-import {
-  CertificateDonePanel,
-  CertificateProcessingPanel,
-  CertificateSelectionPanel,
-} from '@/components/certificate-panel';
+import { CertificateDonePanel, CertificateProcessingPanel, CertificateSelectionPanel } from '@/components/certificate-panel';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
@@ -314,9 +310,9 @@ export function Login() {
             </>
           ) : (
             <>
-              <h2 className="text-2xl font-semibold mb-1">Welcome Back</h2>
+              <h2 className="text-2xl font-semibold mb-1">agPortal</h2>
               <p className="text-sm text-muted-foreground mb-6">
-                Log in to continue your visa application journey
+                Acesse sua conta para continuar
               </p>
 
               <label className="text-sm mb-2 text-muted-foreground">
