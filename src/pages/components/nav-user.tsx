@@ -120,7 +120,6 @@ export function NavUser({
         </SheetContent>
       </Sheet>
 
-      {/* Sheet: Mudar senha - Usuário */}
       <Sheet open={openChangeUserPwd} onOpenChange={setOpenChangeUserPwd}>
         <SheetContent
           side="right"

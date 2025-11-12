@@ -23,7 +23,7 @@ export function RequestAccess() {
           style={{ maxWidth: 500 }}
         >
           <div className="w-full">
-            <SheetHeader className="mb-4">
+            <SheetHeader className="mb-4 gap-0">
               <h3 className="text-xl font-semibold text-slate-700">
                 Solicitar acesso
               </h3>
@@ -34,7 +34,7 @@ export function RequestAccess() {
 
             <form className="px-6">
               <FieldGroup>
-                <Field>
+                <Field >
                   <FieldLabel htmlFor="request-what">
                     O que deseja acessar?
                   </FieldLabel>
@@ -68,7 +68,6 @@ export function RequestAccess() {
                     </Button>
                   </div>
 
-                  {/* uploaded files table (mock) */}
                   <div className="mt-4 border rounded">
                     <table className="w-full text-sm">
                       <thead className="bg-muted/40">

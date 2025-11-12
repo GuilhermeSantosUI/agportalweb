@@ -3,6 +3,7 @@ import FavoritesGrid from '@/components/favorite-grid';
 import FavoritesList from '@/components/favorite-list';
 import { Header } from '@/components/header';
 import { Button } from '@/components/ui/button';
+import { ButtonGroup } from '@/components/ui/button-group';
 import {
   Empty,
   EmptyContent,
@@ -16,8 +17,10 @@ import {
   Buildings,
   Car,
   CurrencyDollar,
+  List,
   MagnifyingGlass,
   Robot,
+  SquaresFour,
   User,
   Users,
 } from '@phosphor-icons/react';
@@ -118,22 +121,27 @@ export function Dashboard() {
                 />
               </div>
 
-              <Button
-                variant={viewMode === 'grid' ? 'default' : 'outline'}
-                size="lg"
-                className="px-3"
-                onClick={() => setViewMode('grid')}
-              >
-                Visualização em Grid
-              </Button>
-              <Button
-                variant={viewMode === 'list' ? 'default' : 'outline'}
-                size="lg"
-                className="px-3"
-                onClick={() => setViewMode('list')}
-              >
-                Visualização em Lista
-              </Button>
+              <ButtonGroup>
+                <Button
+                  variant={viewMode === 'grid' ? 'default' : 'outline'}
+                  size="lg"
+                  className="px-3  border-1"
+                  onClick={() => setViewMode('grid')}
+                >
+                  <SquaresFour className="size-5" />
+                  <span className="sr-only">Visualização em Grid</span>
+                </Button>
+
+                <Button
+                  variant={viewMode === 'list' ? 'default' : 'outline'}
+                  size="lg"
+                  className="px-3 border-1"
+                  onClick={() => setViewMode('list')}
+                >
+                  <List className="size-5" />
+                  <span className="sr-only">Visualização em Lista</span>
+                </Button>
+              </ButtonGroup>
             </div>
           </div>
 

@@ -6,7 +6,6 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 export function App() {
   return (
     <BrowserRouter>
-      {/* Toaster global para notificações Sonner */}
       <Toaster />
 
       <Routes>

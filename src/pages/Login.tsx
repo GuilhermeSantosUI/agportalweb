@@ -1,4 +1,4 @@
-import logoImg from '@/assets/images/agape-logo.png';
+import logoImg from '@/assets/images/agape-logo-amarela.png';
 import { CertificateDonePanel, CertificateProcessingPanel, CertificateSelectionPanel } from '@/components/certificate-panel';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
