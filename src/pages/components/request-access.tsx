@@ -20,6 +20,7 @@ export function RequestAccess() {
         <SheetContent
           side="right"
           className="w-full rounded-tl-2xl rounded-bl-2xl overflow-y-auto"
+          style={{ maxWidth: 500 }}
         >
           <div className="w-full">
             <SheetHeader className="mb-4">

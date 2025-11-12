@@ -5,15 +5,15 @@ import * as React from 'react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+} from '@/components/ui/sheet';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -87,22 +87,24 @@ export function NavUser({
         </DropdownMenuContent>
       </DropdownMenu>
 
-      {/* Dialog: Recadastramento */}
-      <Dialog open={openRecadastro} onOpenChange={setOpenRecadastro}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Recadastramento</DialogTitle>
-          </DialogHeader>
-          <DialogDescription>
-            Acesse o formulário de recadastramento para visualizar o sistema.
-          </DialogDescription>
+      <Sheet open={openRecadastro} onOpenChange={setOpenRecadastro}>
+        <SheetContent
+          side="right"
+          className="w-full rounded-tl-2xl rounded-bl-2xl overflow-y-auto"
+        >
+          <SheetHeader>
+            <SheetTitle>Recadastramento</SheetTitle>
+            <SheetDescription>
+              Acesse o formulário de recadastramento para visualizar o sistema.
+            </SheetDescription>
+          </SheetHeader>
 
-          <div className="grid gap-2 py-4">
+          <div className="grid gap-2 py-4 px-4">
             <label className="text-sm">Matrícula / Usuário</label>
             <Input placeholder="Informe o identificador" />
           </div>
 
-          <DialogFooter>
+          <SheetFooter className="flex items-center justify-end gap-4">
             <Button variant="outline" onClick={() => setOpenRecadastro(false)}>
               Cancelar
             </Button>
@@ -114,21 +116,24 @@ export function NavUser({
             >
               Abrir
             </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+          </SheetFooter>
+        </SheetContent>
+      </Sheet>
 
-      {/* Dialog: Mudar senha - Usuário */}
-      <Dialog open={openChangeUserPwd} onOpenChange={setOpenChangeUserPwd}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Mudar senha (Usuário)</DialogTitle>
-          </DialogHeader>
-          <DialogDescription>
-            Alterar a senha de acesso do usuário.
-          </DialogDescription>
+      {/* Sheet: Mudar senha - Usuário */}
+      <Sheet open={openChangeUserPwd} onOpenChange={setOpenChangeUserPwd}>
+        <SheetContent
+          side="right"
+          className="w-full rounded-tl-2xl rounded-bl-2xl overflow-y-auto"
+        >
+          <SheetHeader>
+            <SheetTitle>Mudar senha (Usuário)</SheetTitle>
+            <SheetDescription>
+              Alterar a senha de acesso do usuário.
+            </SheetDescription>
+          </SheetHeader>
 
-          <div className="grid gap-2 py-4">
+          <div className="grid gap-2 py-4 px-4">
             <label className="text-sm">Senha atual</label>
             <Input type="password" placeholder="Senha atual" />
             <label className="text-sm">Nova senha</label>
@@ -137,7 +142,7 @@ export function NavUser({
             <Input type="password" placeholder="Confirme a nova senha" />
           </div>
 
-          <DialogFooter>
+          <SheetFooter className="flex items-center justify-end gap-4">
             <Button
               variant="outline"
               onClick={() => setOpenChangeUserPwd(false)}
@@ -152,42 +157,43 @@ export function NavUser({
             >
               Salvar
             </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+          </SheetFooter>
+        </SheetContent>
+      </Sheet>
 
-      {/* Dialog: Mudar senha - Banco */}
-      <Dialog open={openChangeDbPwd} onOpenChange={setOpenChangeDbPwd}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Mudar senha (Banco)</DialogTitle>
-          </DialogHeader>
-          <DialogDescription>
-            Alterar a senha do usuário de banco de dados.
-          </DialogDescription>
+      <Sheet open={openChangeDbPwd} onOpenChange={setOpenChangeDbPwd}>
+        <SheetContent
+          side="right"
+          className="w-full rounded-tl-2xl rounded-bl-2xl overflow-y-auto"
+        >
+          <SheetHeader>
+            <SheetTitle>Mudar senha (Banco)</SheetTitle>
+            <SheetDescription>
+              Alterar a senha do usuário de banco de dados.
+            </SheetDescription>
+          </SheetHeader>
 
-          <div className="grid gap-2 py-4">
+          <div className="grid gap-2 py-4 px-4">
             <label className="text-sm">Usuário do banco</label>
             <Input placeholder="Usuário do banco" />
             <label className="text-sm">Nova senha do banco</label>
             <Input type="password" placeholder="Nova senha" />
           </div>
 
-          <DialogFooter>
+          <SheetFooter className="flex items-center justify-end gap-4">
             <Button variant="outline" onClick={() => setOpenChangeDbPwd(false)}>
               Cancelar
             </Button>
             <Button
               onClick={() => {
-                // TODO: implementar submissão de alteração de senha do banco
                 setOpenChangeDbPwd(false);
               }}
             >
               Salvar
             </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+          </SheetFooter>
+        </SheetContent>
+      </Sheet>
     </>
   );
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import FavoriteCard from './FavoriteCard';
+import FavoriteCard from './favorite-card';
 
 type Fav = {
   title: string;
