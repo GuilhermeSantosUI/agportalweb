@@ -1,16 +1,14 @@
+import { hasAccess } from '@/app/utils/access';
 import useFavorites from '@/app/utils/useFavorites';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { RequestAccess } from '@/pages/components/request-access';
 import { Star } from '@phosphor-icons/react';
 import React from 'react';
+
 import StatusBadge from './status-badge';
 
 type Props = {
+  id?: string;
   title: string;
   subtitle?: string;
   Icon: React.ElementType;
@@ -18,20 +16,16 @@ type Props = {
   lastAccess?: string;
 };
 
-export function FavoriteCard({
-  title,
-  subtitle,
-  Icon,
-  status,
-  lastAccess,
-}: Props) {
-  const id = title.replace(/\s+/g, '-').toLowerCase();
+export function FavoriteCard({ id, title, subtitle, Icon, status, lastAccess, }: Props) {
+  const computedId = id ?? title.replace(/\s+/g, '-').toLowerCase();
   const { isFavorite, toggle } = useFavorites();
-  const fav = isFavorite(id);
+  const fav = isFavorite(computedId);
+  const access = hasAccess(computedId);
+
   return (
     <Card
-      className="group transition-all gap-0 duration-300 cursor-pointer border border-primary/20"
-      onClick={() => console.log('Abrir', title)}
+      className={`group transition-all gap-0 duration-300 ${access ? 'cursor-pointer' : 'opacity-80'} border border-primary/20 relative`}
+      onClick={() => access && console.log('Abrir', title)}
       role="button"
       aria-label={`Abrir ${title}`}
     >
@@ -51,7 +45,7 @@ export function FavoriteCard({
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                toggle(id);
+                toggle(computedId);
               }}
               aria-pressed={fav}
               aria-label={
@@ -81,6 +75,18 @@ export function FavoriteCard({
           <span className="text-xs text-muted-foreground">{lastAccess}</span>
         </div>
       </CardContent>
+
+      {!access && (
+        <div className="absolute inset-0 bg-black/40 flex items-center justify-center rounded">
+          <div className="text-center">
+            <div className="mb-3 text-white font-semibold">Acesso restrito</div>
+            <div className="flex items-center justify-center gap-2">
+              {/* RequestAccess traz o próprio botão e sheet */}
+              <RequestAccess />
+            </div>
+          </div>
+        </div>
+      )}
     </Card>
   );
 }

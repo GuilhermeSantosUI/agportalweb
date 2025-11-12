@@ -2,6 +2,7 @@ import React from 'react';
 import FavoriteCard from './favorite-card';
 
 type Fav = {
+  id?: string;
   title: string;
   subtitle?: string;
   Icon: React.ElementType;
@@ -16,7 +17,8 @@ export function FavoritesGrid({ favorites }: Props) {
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       {favorites.map((f) => (
         <FavoriteCard
-          key={f.title}
+          key={f.id ?? f.title}
+          id={f.id}
           title={f.title}
           subtitle={f.subtitle}
           Icon={f.Icon}
