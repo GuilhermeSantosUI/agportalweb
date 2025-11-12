@@ -4,6 +4,15 @@ import { Database, Key, LogOut } from 'lucide-react';
 import * as React from 'react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '../../components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '../../components/ui/dialog';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,16 +27,19 @@ import { Reregister } from './reregister';
 
 export function NavUser({
   user,
+  onLogout,
 }: {
   user: {
     name: string;
     email: string;
     avatar: string;
   };
+  onLogout?: () => void;
 }) {
   const [openRecadastro, setOpenRecadastro] = React.useState(false);
   const [openChangeUserPwd, setOpenChangeUserPwd] = React.useState(false);
   const [openChangeDbPwd, setOpenChangeDbPwd] = React.useState(false);
+  const [openLogoutDialog, setOpenLogoutDialog] = React.useState(false);
 
   return (
     <>
@@ -73,12 +85,52 @@ export function NavUser({
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setOpenLogoutDialog(true)}>
             <LogOut />
             Log out
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+
+      <Dialog open={openLogoutDialog} onOpenChange={setOpenLogoutDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Deseja sair?</DialogTitle>
+            <DialogDescription>
+              Tem certeza que deseja sair do sistema? Você pode continuar sua
+              sessão selecionando "Continuar".
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button
+              variant="default"
+              onClick={() => {
+                setOpenLogoutDialog(false);
+              }}
+            >
+              Continuar
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={() => {
+                setOpenLogoutDialog(false);
+                if (onLogout) {
+                  onLogout();
+                } else {
+                  // placeholder: implementar logout real aqui
+                  // por enquanto só logamos no console
+                  // quem usa o componente pode passar `onLogout`
+                  // para executar a ação real
+                  // Ex.: redirecionar para /logout ou chamar API
+                  console.log('logout');
+                }
+              }}
+            >
+              Sair
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       <Reregister open={openRecadastro} onOpenChange={setOpenRecadastro} />
       <ChangePassword
