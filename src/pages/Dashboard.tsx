@@ -1,7 +1,6 @@
 import useFavorites from '@/app/utils/useFavorites';
 import FavoritesGrid from '@/components/favorite-grid';
 import FavoritesList from '@/components/favorite-list';
-import { Header } from '@/components/header';
 import { Button } from '@/components/ui/button';
 import { ButtonGroup } from '@/components/ui/button-group';
 import {
@@ -15,6 +14,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { List, MagnifyingGlass, SquaresFour } from '@phosphor-icons/react';
 import { useState } from 'react';
+import { Header } from '../components/header';
 import { modules } from './modules-mock';
 
 export function Dashboard() {
