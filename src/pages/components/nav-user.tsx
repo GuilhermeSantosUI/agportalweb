@@ -23,6 +23,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../../components/ui/dropdown-menu';
+import { Reregister } from './reregister';
 
 export function NavUser({
   user,
@@ -87,38 +88,7 @@ export function NavUser({
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <Sheet open={openRecadastro} onOpenChange={setOpenRecadastro}>
-        <SheetContent
-          side="right"
-          className="w-full rounded-tl-2xl rounded-bl-2xl overflow-y-auto"
-        >
-          <SheetHeader>
-            <SheetTitle>Recadastramento</SheetTitle>
-            <SheetDescription>
-              Acesse o formulário de recadastramento para visualizar o sistema.
-            </SheetDescription>
-          </SheetHeader>
-
-          <div className="grid gap-2 py-4 px-4">
-            <label className="text-sm">Matrícula / Usuário</label>
-            <Input placeholder="Informe o identificador" />
-          </div>
-
-          <SheetFooter className="flex items-center justify-end gap-4">
-            <Button variant="outline" onClick={() => setOpenRecadastro(false)}>
-              Cancelar
-            </Button>
-            <Button
-              onClick={() => {
-                // TODO: implementar ação de recadastramento
-                setOpenRecadastro(false);
-              }}
-            >
-              Abrir
-            </Button>
-          </SheetFooter>
-        </SheetContent>
-      </Sheet>
+      <Reregister open={openRecadastro} onOpenChange={setOpenRecadastro} />
 
       <Sheet open={openChangeUserPwd} onOpenChange={setOpenChangeUserPwd}>
         <SheetContent
