@@ -1,7 +1,8 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Toaster } from './components/ui/sonner';
-import { Dashboard } from './pages/dashboard';
-import { Login } from './pages/login';
+import { Login } from './pages/Login';
+import { Dashboard } from './pages/Dashboard';
+
 
 export function App() {
   return (
