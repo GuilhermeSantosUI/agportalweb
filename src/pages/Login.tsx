@@ -1,5 +1,9 @@
 import logoImg from '@/assets/images/agape-logo-amarela.png';
-import { CertificateDonePanel, CertificateProcessingPanel, CertificateSelectionPanel } from '@/components/certificate-panel';
+import {
+  CertificateDonePanel,
+  CertificateProcessingPanel,
+  CertificateSelectionPanel,
+} from '@/components/certificate-panel';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
@@ -156,10 +160,10 @@ export function Login() {
   }
 
   return (
-    <div className="h-screen bg-white p-6">
+    <div className="h-screen bg-background p-6">
       <div className="w-full h-full flex gap-8 items-center">
-        <img 
-          src="https://ui.shadcn.com/placeholder.svg" 
+        <img
+          src="https://ui.shadcn.com/placeholder.svg"
           className="hidden md:flex w-[60%] object-cover items-center justify-center h-full rounded-xl"
         />
 
@@ -358,18 +362,18 @@ export function Login() {
 
               <Button
                 loading={loginLoading}
-                className="w-full mb-6 h-11 bg-[#061633] text-white"
+                className="w-full mb-6 h-11 bg-[#061633] text-white dark:hover:bg-[#061633]/90"
                 onClick={onLoginClick}
               >
                 Acessar minha conta!
               </Button>
 
               <div className="flex items-center gap-4 mb-6">
-                <div className="flex-1 h-px bg-gray-200" />
+                <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
                 <div className="text-sm text-muted-foreground">
                   Ou entrar com
                 </div>
-                <div className="flex-1 h-px bg-gray-200" />
+                <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
               </div>
 
               <div className="grid grid-cols-2 gap-4">

@@ -58,7 +58,7 @@ export function RequestAccess() {
 
   return (
     <>
-      <Button variant="outline" size="sm" onClick={() => setSheetOpen(true)}>
+      <Button variant="outline" className='text-black' size="sm" onClick={() => setSheetOpen(true)}>
         Solicitar acesso
       </Button>
 
@@ -171,7 +171,7 @@ export function RequestAccess() {
                           files.map((f) => (
                             <tr
                               key={f.id}
-                              className="odd:bg-white even:bg-muted/10"
+                              className="odd:bg-card even:bg-muted/10"
                             >
                               <td className="px-3 py-2 max-w-60 truncate">
                                 {f.file.name}

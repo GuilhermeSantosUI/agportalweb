@@ -1,3 +1,4 @@
+import { useTheme } from '@/app/utils/theme';
 import useFavorites from '@/app/utils/useFavorites';
 import FavoritesGrid from '@/components/favorite-grid';
 import FavoritesList from '@/components/favorite-list';
@@ -12,8 +13,15 @@ import {
   EmptyTitle,
 } from '@/components/ui/empty';
 import { Input } from '@/components/ui/input';
-import { List, MagnifyingGlass, SquaresFour } from '@phosphor-icons/react';
+import {
+  List,
+  MagnifyingGlass,
+  Moon,
+  SquaresFour,
+  Sun,
+} from '@phosphor-icons/react';
 import { useState } from 'react';
+
 import { modules } from './modules-mock';
 
 export function Dashboard() {
@@ -38,7 +46,7 @@ export function Dashboard() {
     <div className="min-h-screen text-foreground bg-primary flex flex-col">
       <Header />
 
-      <main className="flex-1 p-6 bg-white rounded-tr-2xl rounded-tl-2xl">
+      <main className="flex-1 p-6 bg-card rounded-tr-2xl rounded-tl-2xl">
         <div className="mx-auto w-full">
           <div className="flex items-center justify-between mb-6">
             <div>
@@ -149,6 +157,7 @@ export function Dashboard() {
   );
 }
 
+import logoAlternativeImg from '@/assets/images/agape-logo-amarela.png';
 import logoImg from '@/assets/images/agape-logo.png';
 import { NavUser } from '@/pages/components/nav-user';
 import { RequestAccess } from '@/pages/components/request-access';
@@ -183,6 +192,9 @@ import {
 
 export function Header() {
   const [open, setOpen] = React.useState(false);
+  const { theme } = useTheme();
+
+  const { resolvedTheme, toggleTheme } = useTheme();
 
   const [notifications, setNotifications] = React.useState(
     () =>
@@ -239,15 +251,24 @@ export function Header() {
   }
 
   return (
-    <header className="flex items-center justify-between px-6 bg-primary py-4 to-transparent backdrop-blur-sm">
+    <header className="flex items-center text-white dark:text-black justify-between px-6 bg-primary py-4 to-transparent backdrop-blur-sm">
       <div className="flex items-center gap-4">
-        <img src={logoImg} alt="Ágape Sistemas" className="w-32 rounded-sm" />
+        <img
+          src={theme ? logoAlternativeImg : logoImg}
+          alt="Ágape Sistemas"
+          className="w-32 rounded-sm"
+        />
         <GreetingPill />
       </div>
 
       <div className="flex items-center gap-3">
         <div>
-          <Button variant="outline" size="sm" onClick={() => setOpen(true)}>
+          <Button
+            variant="outline"
+            className="text-black dark:hover:text-black dark:bg-primary"
+            size="sm"
+            onClick={() => setOpen(true)}
+          >
             Busca (Ctrl/Cmd+K)
           </Button>
           <CommandDialog open={open} onOpenChange={setOpen} title="Buscar">
@@ -286,9 +307,14 @@ export function Header() {
 
         <DropdownMenu>
           <DropdownMenuTrigger>
-            <Button variant="outline" size="icon-sm" aria-label="Notificações">
+            <Button
+              variant="outline"
+              className="text-black dark:hover:text-black dark:bg-primary"
+              size="icon-sm"
+              aria-label="Notificações"
+            >
               <div className="relative">
-                <BellIcon className="size-5" color="#000" />
+                <BellIcon className="size-5" />
                 {unreadCount > 0 && (
                   <Badge className="absolute -top-3 -right-3 text-[8px] w-[14px] h-[14px] p-0 bg-red-600">
                     {unreadCount}
@@ -334,17 +360,33 @@ export function Header() {
           </DropdownMenuContent>
         </DropdownMenu>
 
-        <div className="flex items-center">
-          <RequestAccess />
-        </div>
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="icon-sm"
+            className="text-black dark:hover:text-black dark:bg-primary"
+            aria-label="Alternar tema"
+            onClick={() => toggleTheme()}
+          >
+            {resolvedTheme === 'dark' ? (
+              <Sun className="size-5" />
+            ) : (
+              <Moon className="size-5" />
+            )}
+          </Button>
 
-        <NavUser
-          user={{
-            name: 'User Name',
-            email: 'user@example.com',
-            avatar: '/path/to/avatar.jpg',
-          }}
-        />
+          <div className="flex items-center">
+            <RequestAccess />
+          </div>
+
+          <NavUser
+            user={{
+              name: 'User Name',
+              email: 'user@example.com',
+              avatar: '/path/to/avatar.jpg',
+            }}
+          />
+        </div>
       </div>
     </header>
   );
@@ -395,7 +437,7 @@ function GreetingPill() {
       <span className={`greeting-icon ${timeState.colorClass}`}>
         <Icon className="h-4 w-4" weight="duotone" />
       </span>
-      <span className="text-white">{timeState.greeting}</span>
+      <span className="text-white dark:text-black">{timeState.greeting}</span>
     </div>
   );
 }

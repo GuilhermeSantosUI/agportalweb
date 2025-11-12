@@ -117,7 +117,7 @@ export function ReregisterForm({ onClose }: { onClose?: () => void }) {
         }}
       >
         <div className="pb-4">
-          <div className="bg-white/60 border border-sky-100 rounded p-4 mb-4">
+          <div className="bg-card/60 border border-sky-100 rounded p-4 mb-4">
             <div className="flex items-center gap-4">
               <div
                 className="flex flex-col items-center gap-2"

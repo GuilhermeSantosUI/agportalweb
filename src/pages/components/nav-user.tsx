@@ -47,8 +47,8 @@ export function NavUser({
     <>
       <DropdownMenu>
         <DropdownMenuTrigger>
-          <div className="flex items-center gap-2">
-            <Avatar className="h-8 w-8 rounded-sm bg-white">
+          <div className="flex items-center gap-2 dark:hover:text-black text-black dark:bg-primary">
+            <Avatar className="h-8 w-8 rounded-sm bg-card">
               <AvatarImage src={user.avatar} alt={user.name} />
               <AvatarFallback className="rounded-lg">CN</AvatarFallback>
             </Avatar>
