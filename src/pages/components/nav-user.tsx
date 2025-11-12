@@ -4,16 +4,6 @@ import { Database, Key, LogOut } from 'lucide-react';
 import * as React from 'react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-} from '@/components/ui/sheet';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,6 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../../components/ui/dropdown-menu';
+import { ChangePassword } from './change-password';
 import { Reregister } from './reregister';
 
 export function NavUser({
@@ -37,6 +28,7 @@ export function NavUser({
   const [openRecadastro, setOpenRecadastro] = React.useState(false);
   const [openChangeUserPwd, setOpenChangeUserPwd] = React.useState(false);
   const [openChangeDbPwd, setOpenChangeDbPwd] = React.useState(false);
+
   return (
     <>
       <DropdownMenu>
@@ -89,80 +81,12 @@ export function NavUser({
       </DropdownMenu>
 
       <Reregister open={openRecadastro} onOpenChange={setOpenRecadastro} />
-
-      <Sheet open={openChangeUserPwd} onOpenChange={setOpenChangeUserPwd}>
-        <SheetContent
-          side="right"
-          className="w-full rounded-tl-2xl rounded-bl-2xl overflow-y-auto"
-        >
-          <SheetHeader>
-            <SheetTitle>Mudar senha (Usuário)</SheetTitle>
-            <SheetDescription>
-              Alterar a senha de acesso do usuário.
-            </SheetDescription>
-          </SheetHeader>
-
-          <div className="grid gap-2 py-4 px-4">
-            <label className="text-sm">Senha atual</label>
-            <Input type="password" placeholder="Senha atual" />
-            <label className="text-sm">Nova senha</label>
-            <Input type="password" placeholder="Nova senha" />
-            <label className="text-sm">Confirmar nova senha</label>
-            <Input type="password" placeholder="Confirme a nova senha" />
-          </div>
-
-          <SheetFooter className="flex items-center justify-end gap-4">
-            <Button
-              variant="outline"
-              onClick={() => setOpenChangeUserPwd(false)}
-            >
-              Cancelar
-            </Button>
-            <Button
-              onClick={() => {
-                // TODO: implementar submissão de alteração de senha do usuário
-                setOpenChangeUserPwd(false);
-              }}
-            >
-              Salvar
-            </Button>
-          </SheetFooter>
-        </SheetContent>
-      </Sheet>
-
-      <Sheet open={openChangeDbPwd} onOpenChange={setOpenChangeDbPwd}>
-        <SheetContent
-          side="right"
-          className="w-full rounded-tl-2xl rounded-bl-2xl overflow-y-auto"
-        >
-          <SheetHeader>
-            <SheetTitle>Mudar senha (Banco)</SheetTitle>
-            <SheetDescription>
-              Alterar a senha do usuário de banco de dados.
-            </SheetDescription>
-          </SheetHeader>
-
-          <div className="grid gap-2 py-4 px-4">
-            <label className="text-sm">Usuário do banco</label>
-            <Input placeholder="Usuário do banco" />
-            <label className="text-sm">Nova senha do banco</label>
-            <Input type="password" placeholder="Nova senha" />
-          </div>
-
-          <SheetFooter className="flex items-center justify-end gap-4">
-            <Button variant="outline" onClick={() => setOpenChangeDbPwd(false)}>
-              Cancelar
-            </Button>
-            <Button
-              onClick={() => {
-                setOpenChangeDbPwd(false);
-              }}
-            >
-              Salvar
-            </Button>
-          </SheetFooter>
-        </SheetContent>
-      </Sheet>
+      <ChangePassword
+        openChangeUserPwd={openChangeUserPwd}
+        setOpenChangeUserPwd={setOpenChangeUserPwd}
+        openChangeDbPwd={openChangeDbPwd}
+        setOpenChangeDbPwd={setOpenChangeDbPwd}
+      />
     </>
   );
 }
