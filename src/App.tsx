@@ -5,7 +5,7 @@ import { Routes } from './routes';
 export function App() {
   return (
     <BrowserRouter>
-      <Toaster />
+      <Toaster richColors />
 
       <Routes />
     </BrowserRouter>

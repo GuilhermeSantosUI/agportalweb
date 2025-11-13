@@ -67,29 +67,30 @@ export function FavoriteCard({
         </div>
 
         <div className="flex items-center gap-3">
-          {/* Estrela de favoritos */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              toggle(computedId);
-            }}
-            aria-pressed={fav}
-            aria-label={
-              fav ? 'Remover dos favoritos' : 'Adicionar aos favoritos'
-            }
-            title={fav ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
-            className="p-2 rounded hover:bg-muted/30"
-          >
-            {fav ? (
-              <Star size={18} weight="fill" className="text-amber-500" />
-            ) : (
-              <Star
-                size={18}
-                weight="regular"
-                className="text-muted-foreground"
-              />
-            )}
-          </button>
+          {access && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                toggle(computedId);
+              }}
+              aria-pressed={fav}
+              aria-label={
+                fav ? 'Remover dos favoritos' : 'Adicionar aos favoritos'
+              }
+              title={fav ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
+              className="p-2 rounded hover:bg-muted/30"
+            >
+              {fav ? (
+                <Star size={18} weight="fill" className="text-amber-500" />
+              ) : (
+                <Star
+                  size={18}
+                  weight="regular"
+                  className="text-muted-foreground"
+                />
+              )}
+            </button>
+          )}
 
           {access ? (
             <div className="flex items-center gap-4">
@@ -133,28 +134,30 @@ export function FavoriteCard({
 
         <div className="flex items-center gap-1">
           {/* Estrela de favoritos */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              toggle(computedId);
-            }}
-            aria-pressed={fav}
-            aria-label={
-              fav ? 'Remover dos favoritos' : 'Adicionar aos favoritos'
-            }
-            title={fav ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
-            className="p-2 rounded hover:bg-muted/30"
-          >
-            {fav ? (
-              <Star size={18} weight="fill" className="text-amber-500" />
-            ) : (
-              <Star
-                size={18}
-                weight="regular"
-                className="text-muted-foreground"
-              />
-            )}
-          </button>
+          {access && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                toggle(computedId);
+              }}
+              aria-pressed={fav}
+              aria-label={
+                fav ? 'Remover dos favoritos' : 'Adicionar aos favoritos'
+              }
+              title={fav ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
+              className="p-2 rounded hover:bg-muted/30"
+            >
+              {fav ? (
+                <Star size={18} weight="fill" className="text-amber-500" />
+              ) : (
+                <Star
+                  size={18}
+                  weight="regular"
+                  className="text-muted-foreground"
+                />
+              )}
+            </button>
+          )}
         </div>
       </div>
 

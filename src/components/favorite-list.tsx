@@ -1,9 +1,9 @@
 import { hasAccess } from '@/app/utils/access';
 import useFavorites from '@/app/utils/useFavorites';
-import { RequestAccess } from '@/pages/components/request-access';
 import { Star } from '@phosphor-icons/react';
 import React from 'react';
 import StatusBadge from './status-badge';
+import { Button } from './ui/button';
 
 type Fav = {
   id?: string;
@@ -67,7 +67,21 @@ export function FavoritesList({ favorites }: Props) {
                   />
                 </button>
               ) : (
-                <RequestAccess />
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="text-black"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    window.dispatchEvent(
+                      new CustomEvent('open-request-access', {
+                        detail: { what: f.title, id },
+                      })
+                    );
+                  }}
+                >
+                  Solicitar acesso
+                </Button>
               )}
             </div>
           </div>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 
 const STORAGE_KEY = 'agportal:favorites';
 
@@ -33,6 +34,7 @@ export function toggleFavoriteId(id: string) {
   const list = readStorage();
   const has = list.includes(id);
   const next = has ? list.filter((i) => i !== id) : [...list, id];
+  toast.success(has ? 'Removido dos favoritos' : 'Adicionado aos favoritos');
   writeStorage(next);
   notify();
 }
