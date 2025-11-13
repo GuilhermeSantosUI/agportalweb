@@ -7,6 +7,13 @@ import {
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { toast } from 'sonner';
 
 import type { CertificateType } from '@/types/certificate';
@@ -30,6 +37,52 @@ export function Login() {
   const [sendingCode, setSendingCode] = useState(false);
   const [verifyingCode, setVerifyingCode] = useState(false);
   const [resetting, setResetting] = useState(false);
+  // --- NOVO: estados e usuários mock para o fluxo solicitado ---
+  const [cpfInput, setCpfInput] = useState('');
+  const [passwordInput, setPasswordInput] = useState('');
+  const [userOptions, setUserOptions] = useState<
+    Array<{
+      id: string;
+      name: string;
+      cpf: string;
+      password: string;
+      active: boolean;
+    }>
+  >([]);
+  const [showUserSelect, setShowUserSelect] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
+
+  // Mock de usuários — alguns CPFs com múltiplos usuários ativos para teste
+  const [mockUsers] = useState([
+    {
+      id: 'u1',
+      cpf: '123.456.789-00',
+      name: 'João Silva (Prefeitura)',
+      password: 'senha123',
+      active: true,
+    },
+    {
+      id: 'u2',
+      cpf: '123.456.789-00',
+      name: 'João Silva (Secretaria)',
+      password: 'senha123',
+      active: true,
+    },
+    {
+      id: 'u3',
+      cpf: '987.654.321-00',
+      name: 'Maria Oliveira',
+      password: 'maria@2025',
+      active: true,
+    },
+    {
+      id: 'u4',
+      cpf: '555.444.333-22',
+      name: 'Usuário Inativo',
+      password: 'inativo',
+      active: false,
+    },
+  ] as Array<{ id: string; cpf: string; name: string; password: string; active: boolean }>);
   const [certificates] = useState<CertificateType[]>([
     {
       id: '1',
@@ -69,6 +122,77 @@ export function Login() {
 
   const [loginLoading, setLoginLoading] = useState(false);
 
+  // Função de login atualizada para suportar múltiplos usuários por CPF
+  function handleLoginClick() {
+    // Se já estamos no fluxo de seleção de usuário, finalizar login com o usuário selecionado
+    if (showUserSelect) {
+      if (!selectedUserId) {
+        toast.error('Selecione o usuário para entrar.');
+        return;
+      }
+
+      const user = userOptions.find((u) => u.id === selectedUserId) ?? null;
+      if (!user) {
+        toast.error('Usuário inválido.');
+        return;
+      }
+
+      setLoginLoading(true);
+      setTimeout(() => {
+        setLoginLoading(false);
+        navigate('/dashboard');
+      }, 800);
+      return;
+    }
+
+    // Fluxo normal: validar CPF e senha
+    if (!cpfInput || cpfInput.trim() === '') {
+      toast.error('Informe o CPF do usuário.');
+      return;
+    }
+
+    if (!passwordInput || passwordInput.trim() === '') {
+      toast.error('Informe a senha.');
+      return;
+    }
+
+    // Procurar usuários ativos com o CPF informado
+    const matches = mockUsers.filter((u) => u.cpf === cpfInput && u.active);
+
+    if (matches.length === 0) {
+      toast.error('CPF ou senha inválidos.');
+      return;
+    }
+
+    if (matches.length === 1) {
+      // validar senha
+      const user = matches[0];
+      if (user.password !== passwordInput) {
+        toast.error('CPF ou senha inválidos.');
+        return;
+      }
+
+      setLoginLoading(true);
+      setTimeout(() => {
+        setLoginLoading(false);
+        navigate('/dashboard');
+      }, 800);
+      return;
+    }
+
+    // Se encontrou mais de um usuário, abrir select para escolher qual entrar
+    if (matches.length > 1) {
+      setUserOptions(matches);
+      setShowUserSelect(true);
+      setSelectedUserId(null);
+      setPasswordInput('');
+      toast(
+        'Foram encontrados vários perfis para esse CPF. Selecione o usuário desejado.'
+      );
+      return;
+    }
+  }
+
   function openCertPanel() {
     setShowCertPanel(true);
     setCertState('select');
@@ -104,14 +228,6 @@ export function Login() {
 
   function handleCertSelect(certId: string) {
     setSelectedCert(certId);
-  }
-
-  function onLoginClick() {
-    setLoginLoading(true);
-    setTimeout(() => {
-      setLoginLoading(false);
-      navigate('/dashboard');
-    }, 1200);
   }
 
   function sendRecoveryCode() {
@@ -323,25 +439,64 @@ export function Login() {
                 CPF do usuário:
               </label>
               <div className="relative mb-4">
-                <Input placeholder="000.000.000-00" className="h-10" />
+                <Input
+                  placeholder="000.000.000-00"
+                  className="h-10"
+                  value={cpfInput}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setCpfInput(e.target.value)
+                  }
+                />
               </div>
 
-              <label className="text-sm mb-2 text-muted-foreground">
-                Senha:
-              </label>
               <div className="mb-2 relative">
-                <Input
-                  placeholder="************"
-                  type="password"
-                  className="h-10"
-                />
+                {showUserSelect ? (
+                  <div>
+                    <label className="text-sm mb-2 text-muted-foreground">
+                      Selecione o usuário:
+                    </label>
 
-                <button
-                  type="button"
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground"
-                >
-                  <EyeIcon size={18} className="text-gray-500" />
-                </button>
+                    <Select
+                      value={selectedUserId ?? ''}
+                      onValueChange={(v) => setSelectedUserId(v)}
+                    >
+                      <SelectTrigger className="w-full" size="default">
+                        <SelectValue placeholder="-- selecione --" />
+                      </SelectTrigger>
+
+                      <SelectContent>
+                        {userOptions.map((u) => (
+                          <SelectItem key={u.id} value={u.id}>
+                            {u.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                ) : (
+                  <>
+                    <label className="text-sm mb-2 text-muted-foreground">
+                      Senha:
+                    </label>
+
+                    <Input
+                      placeholder="************"
+                      type="password"
+                      className="h-10"
+                      value={passwordInput}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        setPasswordInput(e.target.value)
+                      }
+                    />
+
+                    <button
+                      type="button"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground"
+                    >
+                      <EyeIcon size={18} className="text-gray-500" />
+                    </button>
+                  </>
+                )}
               </div>
 
               <div className="flex items-center justify-between mb-6">
@@ -363,7 +518,7 @@ export function Login() {
               <Button
                 loading={loginLoading}
                 className="w-full mb-6 h-11 bg-[#061633] text-white dark:hover:bg-[#061633]/90"
-                onClick={onLoginClick}
+                onClick={handleLoginClick}
               >
                 Acessar minha conta!
               </Button>
