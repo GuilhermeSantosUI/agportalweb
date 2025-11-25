@@ -1,19 +1,9 @@
 import logoImg from '@/assets/images/agape-logo-amarela.png';
-import {
-  CertificateDonePanel,
-  CertificateProcessingPanel,
-  CertificateSelectionPanel,
-} from '@/components/certificate-panel';
+import { CertificateDonePanel, CertificateProcessingPanel, CertificateSelectionPanel } from '@/components/certificate-panel';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { toast } from 'sonner';
 
 import type { CertificateType } from '@/types/certificate';
@@ -461,8 +451,10 @@ export function Login() {
                       value={selectedUserId ?? ''}
                       onValueChange={(v) => setSelectedUserId(v)}
                     >
-                      <SelectTrigger className="w-full" size="default">
-                        <SelectValue placeholder="-- selecione --" />
+                      <SelectTrigger className="w-full h-10!" size="default">
+                        <SelectValue 
+                          placeholder="Selecione o usuário" 
+                        />
                       </SelectTrigger>
 
                       <SelectContent>
