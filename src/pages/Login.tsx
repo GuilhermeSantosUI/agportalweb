@@ -17,7 +17,7 @@ import {
 import { toast } from 'sonner';
 
 import type { CertificateType } from '@/types/certificate';
-import { EyeIcon } from '@phosphor-icons/react';
+import { EyeClosedIcon, EyeIcon } from '@phosphor-icons/react';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -51,6 +51,7 @@ export function Login() {
   >([]);
   const [showUserSelect, setShowUserSelect] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
+  const [viewPassword, setViewPassword] = useState(false);
 
   // Mock de usuários — alguns CPFs com múltiplos usuários ativos para teste
   const [mockUsers] = useState([
@@ -479,22 +480,29 @@ export function Login() {
                       Senha:
                     </label>
 
-                    <Input
-                      placeholder="************"
-                      type="password"
-                      className="h-10"
-                      value={passwordInput}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        setPasswordInput(e.target.value)
-                      }
-                    />
+                    <div className="relative">
+                      <Input
+                        placeholder="************"
+                        type={viewPassword ? 'text' : 'password'}
+                        className="h-10"
+                        value={passwordInput}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                          setPasswordInput(e.target.value)
+                        }
+                      />
 
-                    <button
-                      type="button"
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground"
-                    >
-                      <EyeIcon size={18} className="text-gray-500" />
-                    </button>
+                      <button
+                        type="button"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 focus:outline-none"
+                        onClick={() => setViewPassword(!viewPassword)}
+                      >
+                        {viewPassword ? (
+                          <EyeClosedIcon size={18} className="text-gray-500" />
+                        ) : (
+                          <EyeIcon size={18} className="text-gray-500" />
+                        )}
+                      </button>
+                    </div>
                   </>
                 )}
               </div>

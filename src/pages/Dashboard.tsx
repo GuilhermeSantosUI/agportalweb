@@ -4,22 +4,9 @@ import FavoritesGrid from '@/components/favorite-grid';
 import FavoritesList from '@/components/favorite-list';
 import { Button } from '@/components/ui/button';
 import { ButtonGroup } from '@/components/ui/button-group';
-import {
-  Empty,
-  EmptyContent,
-  EmptyDescription,
-  EmptyHeader,
-  EmptyMedia,
-  EmptyTitle,
-} from '@/components/ui/empty';
+import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from '@/components/ui/empty';
 import { Input } from '@/components/ui/input';
-import {
-  List,
-  MagnifyingGlass,
-  Moon,
-  SquaresFour,
-  Sun,
-} from '@phosphor-icons/react';
+import { List, MagnifyingGlass, Moon, SquaresFour, Sun } from '@phosphor-icons/react';
 import { useState } from 'react';
 
 import { modules } from './modules-mock';
@@ -192,8 +179,6 @@ import {
 
 export function Header() {
   const [open, setOpen] = React.useState(false);
-  const { theme } = useTheme();
-
   const { resolvedTheme, toggleTheme } = useTheme();
 
   const [notifications, setNotifications] = React.useState(
@@ -254,7 +239,7 @@ export function Header() {
     <header className="flex items-center text-white dark:text-black justify-between px-6 bg-primary py-4 to-transparent backdrop-blur-sm">
       <div className="flex items-center gap-4">
         <img
-          src={theme ? logoAlternativeImg : logoImg}
+          src={resolvedTheme === 'dark' ? logoAlternativeImg : logoImg}
           alt="Ágape Sistemas"
           className="w-32 rounded-sm"
         />

@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import React from 'react';
 
 type Theme = 'light' | 'dark' | 'system';
@@ -90,7 +91,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       const next = prev === 'dark' ? 'light' : 'dark';
       try {
         localStorage.setItem(STORAGE_KEY, next);
-      } catch {}
+      } catch {
+        // ignore
+      }
       return next;
     });
   }, []);
