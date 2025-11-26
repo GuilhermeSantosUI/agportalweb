@@ -1,3 +1,4 @@
+import { hasAccess } from '@/app/utils/access';
 import { useTheme } from '@/app/utils/theme';
 import useFavorites from '@/app/utils/useFavorites';
 import FavoritesGrid from '@/components/favorite-grid';
@@ -13,6 +14,7 @@ import {
   EmptyTitle,
 } from '@/components/ui/empty';
 import { Input } from '@/components/ui/input';
+import { Separator } from '@/components/ui/separator';
 import { CelebrationModal } from '@/pages/components/celebration-modal';
 import {
   List,
@@ -56,6 +58,7 @@ export function Dashboard() {
     subtitle?: string;
   }>(null);
   const [celebrationOpen, setCelebrationOpen] = useState(false);
+  const [showHidden, setShowHidden] = useState(false);
 
   const { favorites: favoriteIds } = useFavorites();
 
@@ -68,8 +71,22 @@ export function Dashboard() {
     );
   });
 
-  const favoriteModules = filtered.filter((m) => favoriteIds.includes(m.id));
-  const otherModules = filtered.filter((m) => !favoriteIds.includes(m.id));
+  // Separar módulos por acesso do usuário
+  const accessible = filtered.filter((m) => hasAccess(m.id));
+  const inaccessible = filtered.filter((m) => !hasAccess(m.id));
+
+  // Separar favoritos e demais dentro de cada grupo
+  const favoriteAccessible = accessible.filter((m) =>
+    favoriteIds.includes(m.id)
+  );
+  const favoriteInaccessible = inaccessible.filter((m) =>
+    favoriteIds.includes(m.id)
+  );
+
+  const otherAccessible = accessible.filter((m) => !favoriteIds.includes(m.id));
+  const otherInaccessible = inaccessible.filter(
+    (m) => !favoriteIds.includes(m.id)
+  );
 
   useEffect(() => {
     try {
@@ -150,11 +167,11 @@ export function Dashboard() {
                 Favoritos
               </h2>
               <span className="text-sm text-muted-foreground">
-                {favoriteModules.length} sistemas
+                {favoriteAccessible.length} sistemas
               </span>
             </div>
 
-            {favoriteModules.length === 0 ? (
+            {favoriteAccessible.length === 0 ? (
               <Empty className="py-12">
                 <EmptyHeader>
                   <EmptyMedia variant="icon">
@@ -168,9 +185,23 @@ export function Dashboard() {
                 <EmptyContent />
               </Empty>
             ) : viewMode === 'grid' ? (
-              <FavoritesGrid favorites={favoriteModules} />
+              <FavoritesGrid favorites={favoriteAccessible} />
             ) : (
-              <FavoritesList favorites={favoriteModules} />
+              <FavoritesList favorites={favoriteAccessible} />
+            )}
+
+            {/* módulos favoritados sem acesso aparecerão ao expandir */}
+            {showHidden && favoriteInaccessible.length > 0 && (
+              <div className="mt-4">
+                <h3 className="text-sm text-muted-foreground mb-2">
+                  Favoritos sem acesso
+                </h3>
+                {viewMode === 'grid' ? (
+                  <FavoritesGrid favorites={favoriteInaccessible} />
+                ) : (
+                  <FavoritesList favorites={favoriteInaccessible} />
+                )}
+              </div>
             )}
 
             <div className="mt-8">
@@ -179,11 +210,11 @@ export function Dashboard() {
                   Outros sistemas
                 </h2>
                 <span className="text-sm text-muted-foreground">
-                  {otherModules.length} sistemas
+                  {otherAccessible.length} sistemas
                 </span>
               </div>
 
-              {otherModules.length === 0 ? (
+              {otherAccessible.length === 0 ? (
                 <Empty className="py-12">
                   <EmptyHeader>
                     <EmptyMedia variant="icon">
@@ -197,9 +228,35 @@ export function Dashboard() {
                   <EmptyContent />
                 </Empty>
               ) : viewMode === 'grid' ? (
-                <FavoritesGrid favorites={otherModules} />
+                <FavoritesGrid favorites={otherAccessible} />
               ) : (
-                <FavoritesList favorites={otherModules} />
+                <FavoritesList favorites={otherAccessible} />
+              )}
+
+              {inaccessible.length > 0 && (
+                <div className="flex items-center gap-4 my-6">
+                  <Separator className="flex-1" />
+                  <Button
+                    variant="outline"
+                    onClick={() => setShowHidden((s) => !s)}
+                  >
+                    {showHidden
+                      ? `Fechar catálogo de ${inaccessible.length} soluções`
+                      : `Conhecer nossas ${inaccessible.length} soluções`}
+                  </Button>
+                  <Separator className="flex-1" />
+                </div>
+              )}
+
+              {/* renderizar módulos não acessíveis quando expandido */}
+              {showHidden && otherInaccessible.length > 0 && (
+                <div className="mt-4">
+                  {viewMode === 'grid' ? (
+                    <FavoritesGrid favorites={otherInaccessible} />
+                  ) : (
+                    <FavoritesList favorites={otherInaccessible} />
+                  )}
+                </div>
               )}
             </div>
           </div>
