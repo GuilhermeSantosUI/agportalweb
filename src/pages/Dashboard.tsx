@@ -4,16 +4,49 @@ import FavoritesGrid from '@/components/favorite-grid';
 import FavoritesList from '@/components/favorite-list';
 import { Button } from '@/components/ui/button';
 import { ButtonGroup } from '@/components/ui/button-group';
-import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from '@/components/ui/empty';
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from '@/components/ui/empty';
 import { Input } from '@/components/ui/input';
-import { List, MagnifyingGlass, Moon, SquaresFour, Sun } from '@phosphor-icons/react';
-import { useState } from 'react';
+import { CelebrationModal } from '@/pages/components/celebration-modal';
+import {
+  List,
+  MagnifyingGlass,
+  Moon,
+  SquaresFour,
+  Sun,
+} from '@phosphor-icons/react';
+import { useEffect, useState } from 'react';
+const CELEBRATIONS = [
+  {
+    id: 0,
+    title: 'Feliz Aniversário',
+    subtitle: `
+      <div>
+        <p>🎉 Que este novo ano de vida seja repleto de alegrias, conquistas e momentos especiais!</p>
+        <p>Desejamos saúde, felicidade e muito sucesso em todos os seus projetos!</p>
+        <p><strong>✨ Que todos os seus sonhos se realizem! ✨</strong></p>
+      </div>
+    `,
+  },
+];
 
 import { modules } from './modules-mock';
 
 export function Dashboard() {
   const [query, setQuery] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [celebration, setCelebration] = useState<null | {
+    id: string | number;
+    title: string;
+    subtitle?: string;
+  }>(null);
+  const [celebrationOpen, setCelebrationOpen] = useState(false);
 
   const { favorites: favoriteIds } = useFavorites();
 
@@ -29,9 +62,32 @@ export function Dashboard() {
   const favoriteModules = filtered.filter((m) => favoriteIds.includes(m.id));
   const otherModules = filtered.filter((m) => !favoriteIds.includes(m.id));
 
+  useEffect(() => {
+    try {
+      const key = 'agportal_last_celebration_index';
+      const lastRaw = localStorage.getItem(key);
+      const last = lastRaw ? parseInt(lastRaw, 10) : -1;
+      const next = (last + 1) % CELEBRATIONS.length;
+      const chosen = CELEBRATIONS[next];
+      localStorage.setItem(key, String(next));
+      setCelebration(chosen);
+      setCelebrationOpen(true);
+    } catch {
+      // se localStorage não existir, apenas usa a primeira
+      setCelebration(CELEBRATIONS[0]);
+      setCelebrationOpen(true);
+    }
+  }, []);
+
   return (
     <div className="min-h-screen text-foreground bg-primary flex flex-col">
       <Header />
+
+      <CelebrationModal
+        celebration={celebration}
+        open={celebrationOpen}
+        onOpenChange={(v) => setCelebrationOpen(v)}
+      />
 
       <main className="flex-1 p-6 bg-card rounded-tr-2xl rounded-tl-2xl">
         <div className="mx-auto w-full">
