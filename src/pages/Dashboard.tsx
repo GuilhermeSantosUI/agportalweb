@@ -27,10 +27,19 @@ const CELEBRATIONS = [
     id: 0,
     title: 'Feliz Aniversário',
     subtitle: `
-      <div>
-        <p>🎉 Que este novo ano de vida seja repleto de alegrias, conquistas e momentos especiais!</p>
-        <p>Desejamos saúde, felicidade e muito sucesso em todos os seus projetos!</p>
-        <p><strong>✨ Que todos os seus sonhos se realizem! ✨</strong></p>
+       <div>
+        <p>🎉 Mais um ano de mandato na vida completado com excelência!</p>
+
+        <p class="my-2">
+          Desejamos que o orçamento para saúde e felicidade <br /> seja ilimitado e sem
+          teto de gastos.
+        </p>
+
+        <p>
+          <strong>
+            ✨ Que a sua gestão pessoal deixe um legado incrível! ✨
+          </strong>
+        </p>
       </div>
     `,
   },
