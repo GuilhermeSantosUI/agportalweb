@@ -133,7 +133,6 @@ export function FavoriteCard({
         </div>
 
         <div className="flex items-center gap-1">
-          {/* Estrela de favoritos */}
           {access && (
             <button
               onClick={(e) => {
@@ -169,8 +168,6 @@ export function FavoriteCard({
           </CardDescription>
         )}
       </div>
-
-      {/* Status e lastAccess apenas quando tem acesso */}
 
       <div className="flex items-center justify-between pt-2">
         <StatusBadge status={status ?? 'offline'} />

@@ -190,7 +190,6 @@ export function Dashboard() {
               <FavoritesList favorites={favoriteAccessible} />
             )}
 
-            {/* módulos favoritados sem acesso aparecerão ao expandir */}
             {showHidden && favoriteInaccessible.length > 0 && (
               <div className="mt-4">
                 <h3 className="text-sm text-muted-foreground mb-2">
@@ -248,7 +247,6 @@ export function Dashboard() {
                 </div>
               )}
 
-              {/* renderizar módulos não acessíveis quando expandido */}
               {showHidden && otherInaccessible.length > 0 && (
                 <div className="mt-4">
                   {viewMode === 'grid' ? (
